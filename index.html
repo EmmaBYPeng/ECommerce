@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ecommerce Platform</title>
+	<link rel="stylesheet" type="text/css" href="">
+</head>
+<body onload="pullItem(1), showCart()">
+	<div id="Title">
+			<h2>Books for Sale</h2>
+	</div>
+
+	<div id="catalogNavigation">
+		<button onclick="pullItem(1)">Forward</button>
+		<button onclick="pullItem(0)">Backward</button>
+	</div>
+
+	<div id="catalogPage">
+		<ul style="list-style: none;" id="catalogList">
+		</ul>
+	</div>
+
+	<div id="shoppingCartPage">
+		<h2>Shopping Cart</h2>
+		<ul style="list-style: none;" id="shoppingCart">
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		// lastRecord is the offset of the first row to return
+		lastRecord = 0;
+
+		function pullItem(next) {
+			var xmlhttp;
+
+			if (next == 0) {
+				if (lastRecord == 2) {
+					lastRecord -= 2;
+				} else if (lastRecord > 2) {
+					lastRecord -= 4;
+				}
+			}
+
+			if (next == 1 && lastRecord == 6) lastRecord -= 2;
+
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome,etc.
+				xmlhttp = new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange = function () {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						txt = "";
+						json = JSON.parse(xmlhttp.responseText);
+						
+						for(i=0;i<json.Item.length;i++) {
+							txt += "<li>" + "<div class=\"item\" id=" + json.Item[i]["itemID"] + ">";							
+							txt += "<h3>" + json.Item[i]["itemName"] + "</h3>";
+							txt += "<p>" + json.Item[i]["itemDescription"] + "</p><br>";
+							txt += "<p>Price: " + json.Item[i]["itemPrice"] + "HKD</p><br>";
+							txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\"><br>";
+							txt += "<button onclick=\"addItem(" + json.Item[i]["itemID"] + ", this)\">Add to cart</button>"
+							txt += "</div>";
+							txt += "</li>";
+						}
+						
+						var lists = document.getElementById("catalogList");
+						lists.innerHTML = txt;					
+					}
+			}
+				
+			xmlhttp.open("GET", "queryItems.php?lastRecord="+lastRecord,true);
+			xmlhttp.send();
+
+			if (lastRecord < 6) lastRecord += 2;
+		}
+
+		function addItem(itemID, button) {
+			var xmlhttp;
+
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome,etc.
+				xmlhttp = new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange = function () {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						list = button.parentNode;
+						list.innerHTML += "Item added!";
+						showCart();		
+					}
+			}
+				
+			xmlhttp.open("GET", "serverProcessing.php?itemID="+itemID,true);
+			xmlhttp.send();
+		}
+
+		function showCart() {
+			var xmlhttp;
+
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome,etc.
+				xmlhttp = new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange = function () {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						txt = "";
+						if (xmlhttp.responseText != "") {
+							json = JSON.parse(xmlhttp.responseText);
+							
+							for(i=0;i<json.Item.length;i++) {
+								id = json.Item[i]["itemID"];
+								inputID = "input" + id;
+
+								txt += "<li>" + "<div class=\"item\" id=" + id + ">";							
+								txt += "<h3>" + json.Item[i]["itemName"] + "</h3>";
+								txt += "<p>" + json.Item[i]["itemDescription"] + "</p><br>";
+								txt += "<p>Price: " + json.Item[i]["itemPrice"] + "HKD</p><br>";
+								txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\"><br>";
+								txt += "Quantity: <input type=\"text\" value=\"1\">";
+								txt += "<input type=\"button\" value=\"Update\" onclick=\"updateQuantity(this)\">";
+								txt += "</div>";
+								txt += "</li>";
+							}
+						}
+						
+						var lists = document.getElementById("shoppingCart");
+						lists.innerHTML = txt;									
+					}
+			}
+				
+			xmlhttp.open("GET", "serverProcessing.php",true);
+			xmlhttp.send();
+		}
+
+		function updateQuantity(button) {
+			value = button.parentNode.childNodes[4].value;
+			alert(value);
+		}
+
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+   	div.item {
+		width: 343px;
+		border-style: inset;
+		border-color: #66FF33, #66FF33 
+    }
+	
+	#more {
+		position: absolute;
+		left:125px;
+		width:150px;
+		height:40px;
+		text-align: center;
+		background-color: #cccccc;
+    }
+	
+    span {
+		text-align: center;
+		padding: 2px;
+		font-weight: bold;
+    }
+
+    h3 {
+		display: inline;
+		color: #0000ff;
+    }
+
+    h4 {
+		display: inline;
+		color: #000000;
+    }
+	
+	h2 {
+		display: inline;
+		color: #000000;
+    }
+	
+	p {
+		word-wrap:break-word;
+		font-family: sans-serif;
+    }
+
+    div {
+		display: block !important;
+    }
+	
+
+	
+	
