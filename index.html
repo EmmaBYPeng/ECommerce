@@ -137,8 +137,33 @@
 		}
 
 		function updateQuantity(button) {
-			value = button.parentNode.childNodes[4].value;
-			alert(value);
+			// <br>, plain-text ("Quantity: ") are also nodes in DOM
+			var value = button.parentNode.childNodes[8].value;
+			var itemID = button.parentNode.id;
+
+			alert(value);			
+
+			if (value == "0") button.parentNode.innerHTML = "";
+
+			var xmlhttp;
+
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome,etc.
+				xmlhttp = new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange = function () {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						if (value != "0") {
+							button.parentNode.childNodes[8].value = value;
+						}	
+						//button.parentNode.innerHTML += "Sent to server!";	
+					}
+			}
+				
+			xmlhttp.open("GET", "serverProcessing.php?itemID="+itemID+"&quantity="+value,true);
+			xmlhttp.send();
 		}
 
 

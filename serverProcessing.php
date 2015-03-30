@@ -11,8 +11,27 @@
 		}
 	}
 
-	if (!empty($_GET)) {
+	function updateQuantity($itemID, $quantity) {
+		if (!isset($_SESSION['itemQuantity'])) {
+			$_SESSION['itemQuantity'] = array();
+		}
+
+		if ($quantity == "0") {
+			unset($_SESSION['shoppingCart'][$itemID]);
+		} else {
+			$_SESSION['itemQuantity'][$itemID] = $quantity;
+		}
+	}
+
+	// problem here! well display deleted item!
+	if (isset($_GET['itemID'])) {
 		addToCart($_GET['itemID']);
+
+		if (isset($_GET['quantity'])) {
+			updateQuantity($_GET['itemID'], $_GET['quantity']);
+		} else { 
+			updateQuantity($_GET['itemID'], "1");
+		}
 	}
 
 	$conn=mysqli_connect('sophia.cs.hku.hk','bpeng','Emma1993') or die ('Failed to Connect '.mysqli_error($conn));
