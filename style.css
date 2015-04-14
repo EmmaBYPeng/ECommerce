@@ -1,48 +1,50 @@
-   	div.item {
-		width: 343px;
-		border-style: inset;
-		border-color: #66FF33, #66FF33 
-    }
-	
-	#more {
-		position: absolute;
-		left:125px;
-		width:150px;
-		height:40px;
-		text-align: center;
-		background-color: #cccccc;
-    }
-	
-    span {
-		text-align: center;
-		padding: 2px;
-		font-weight: bold;
-    }
+body {
+	background-color: AliceBlue;
+	font-family: Century Gothic, sans-serif;
+}
 
-    h3 {
-		display: inline;
-		color: #0000ff;
-    }
+#title  {
+	text-align: center;
+	font-family: Century Gothic, sans-serif;
+	font-variant: small-caps;
+}
 
-    h4 {
-		display: inline;
-		color: #000000;
-    }
-	
-	h2 {
-		display: inline;
-		color: #000000;
-    }
-	
-	p {
-		word-wrap:break-word;
-		font-family: sans-serif;
-    }
+#catalogNavigation {
+	text-align: center;
+}
 
-    div {
-		display: block !important;
-    }
-	
+div.item {
+	border-top: ridge 2px DarkSlateBlue;
+	text-align: center;
+	width: 50%;
+	margin-left: 25%;
+	margin-bottom: 20px;
+}
 
-	
-	
+.image {
+	margin-bottom: 10px;
+}
+
+div.otherTitle  {
+	text-align: center;
+	font-family: Century Gothic, sans-serif;
+	font-variant: small-caps;
+	border-top: dotted; 2px DarkSlateBlue;
+	margin-top: 40px;
+}
+
+div.button {
+	text-align: center;
+}
+
+div.form {
+	text-align: center;
+	width: 40%;
+	margin-left: 30%;
+}
+
+div.form span {
+	display: inline-block;
+	margin: 0.3em 0;
+	width: 7.5em;
+}

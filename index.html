@@ -2,11 +2,11 @@
 <html>
 <head>
 	<title>Ecommerce Platform</title>
-	<link rel="stylesheet" type="text/css" href="">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body onload="pullItem(1), showCart()">
-	<div id="Title">
-			<h2>Books for Sale</h2>
+	<div id="title">
+		<h1>Books for Sale</h1>
 	</div>
 
 	<div id="catalogNavigation">
@@ -20,7 +20,14 @@
 	</div>
 
 	<div id="shoppingCartPage">
-		<h2>Shopping Cart</h2>
+		<div class="otherTitle">
+			<h1>Shopping Cart</h1>
+		</div>
+		<a href="checkout.php">
+			<div class="button">
+				<button>Checkout</button>
+			</div>
+		</a>
 		<ul style="list-style: none;" id="shoppingCart">
 		</ul>
 	</div>
@@ -57,8 +64,8 @@
 							txt += "<li>" + "<div class=\"item\" id=" + json.Item[i]["itemID"] + ">";							
 							txt += "<h3>" + json.Item[i]["itemName"] + "</h3>";
 							txt += "<p>" + json.Item[i]["itemDescription"] + "</p><br>";
-							txt += "<p>Price: " + json.Item[i]["itemPrice"] + "HKD</p><br>";
-							txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\"><br>";
+							txt += "<p>Price: " + json.Item[i]["itemPrice"] + " HKD</p><br>";
+							txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\" class=\"image\"><br>";
 							txt += "<button onclick=\"addItem(" + json.Item[i]["itemID"] + ", this)\">Add to cart</button>"
 							txt += "</div>";
 							txt += "</li>";
@@ -87,7 +94,7 @@
 			xmlhttp.onreadystatechange = function () {
 					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 						list = button.parentNode;
-						list.innerHTML += "Item added!";
+						//list.innerHTML += "Item added!";
 						showCart();		
 					}
 			}
@@ -118,8 +125,8 @@
 								txt += "<li>" + "<div class=\"item\" id=" + id + ">";							
 								txt += "<h3>" + json.Item[i]["itemName"] + "</h3>";
 								txt += "<p>" + json.Item[i]["itemDescription"] + "</p><br>";
-								txt += "<p>Price: " + json.Item[i]["itemPrice"] + "HKD</p><br>";
-								txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\"><br>";
+								txt += "<p>Price: " + json.Item[i]["itemPrice"] + " HKD</p><br>";
+								txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\" class=\"image\"><br>";
 								txt += "Quantity: <input type=\"text\" value=\"1\">";
 								txt += "<input type=\"button\" value=\"Update\" onclick=\"updateQuantity(this)\">";
 								txt += "</div>";
@@ -141,7 +148,7 @@
 			var value = button.parentNode.childNodes[8].value;
 			var itemID = button.parentNode.id;
 
-			alert(value);			
+			//alert(value);			
 
 			if (value == "0") button.parentNode.innerHTML = "";
 
@@ -157,8 +164,7 @@
 					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 						if (value != "0") {
 							button.parentNode.childNodes[8].value = value;
-						}	
-						//button.parentNode.innerHTML += "Sent to server!";	
+						}		
 					}
 			}
 				

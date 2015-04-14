@@ -17,7 +17,8 @@
 		}
 
 		if ($quantity == "0") {
-			unset($_SESSION['shoppingCart'][$itemID]);
+			$key = array_search($itemID, $_SESSION['shoppingCart']);
+			unset($_SESSION['shoppingCart'][$key]);
 		} else {
 			$_SESSION['itemQuantity'][$itemID] = $quantity;
 		}
