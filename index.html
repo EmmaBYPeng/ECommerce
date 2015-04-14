@@ -120,14 +120,13 @@
 							
 							for(i=0;i<json.Item.length;i++) {
 								id = json.Item[i]["itemID"];
-								inputID = "input" + id;
 
 								txt += "<li>" + "<div class=\"item\" id=" + id + ">";							
 								txt += "<h3>" + json.Item[i]["itemName"] + "</h3>";
 								txt += "<p>" + json.Item[i]["itemDescription"] + "</p><br>";
 								txt += "<p>Price: " + json.Item[i]["itemPrice"] + " HKD</p><br>";
 								txt += "<img src=\"" + json.Item[i]["itemImage"] + "\" width=\"120\" heigth=\"100\" class=\"image\"><br>";
-								txt += "Quantity: <input type=\"text\" value=\"1\">";
+								txt += "Quantity: <input type=\"text\" value=\"" + json.Item[i]["itemQuantity"] + "\">";
 								txt += "<input type=\"button\" value=\"Update\" onclick=\"updateQuantity(this)\">";
 								txt += "</div>";
 								txt += "</li>";

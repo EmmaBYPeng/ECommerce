@@ -5,17 +5,15 @@
 	function addToCart($itemID) {
 		if (!isset($_SESSION['shoppingCart'])) {
 			$_SESSION['shoppingCart'] = array();
+			$_SESSION['itemQuantity'] = array();
 		}
 		if (!in_array($itemID, $_SESSION['shoppingCart'])){
 			array_push($_SESSION['shoppingCart'], $itemID);
+			updateQuantity($itemID, "1");
 		}
 	}
 
 	function updateQuantity($itemID, $quantity) {
-		if (!isset($_SESSION['itemQuantity'])) {
-			$_SESSION['itemQuantity'] = array();
-		}
-
 		if ($quantity == "0") {
 			$key = array_search($itemID, $_SESSION['shoppingCart']);
 			unset($_SESSION['shoppingCart'][$key]);
@@ -30,8 +28,6 @@
 
 		if (isset($_GET['quantity'])) {
 			updateQuantity($_GET['itemID'], $_GET['quantity']);
-		} else { 
-			updateQuantity($_GET['itemID'], "1");
 		}
 	}
 
@@ -50,7 +46,8 @@
 		while($row=mysqli_fetch_array($result)) {
 
 			$json[]=array('itemID'=>$row['itemID'], 'itemName'=>$row['itemName'], 'itemDescription'=>$row['itemDescription'], 
-						  'itemImage'=>$row['itemImage'],'itemPrice'=>$row['itemPrice']);
+						  'itemImage'=>$row['itemImage'],'itemPrice'=>$row['itemPrice'], 
+						  'itemQuantity'=>$_SESSION['itemQuantity'][$row['itemID']]);
 		}
 
 		print json_encode(array('Item'=>$json));
